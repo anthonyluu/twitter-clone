@@ -11,7 +11,7 @@ function Tweet(props: TweetType) {
     return <div className="container m-2 p-6 gap-x-4 rounded-xl bg-white outline outline-black/5">
         <TweetHeader displayName={props.displayName} username={props.userName}/>
         <TweetBody tweetBodyText={props.tweetBodyText} createdAt={props.createdAt} />
-        <TweetFooter />
+        <TweetFooter likes={props.likes} replies={props.replies} />
     </div>
 }
 

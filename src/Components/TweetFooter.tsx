@@ -1,30 +1,24 @@
 import ChatBubble from '../assets/icons/ChatBubble.svg'
 import Heart from '../assets/icons/Heart.svg'
 import Link from '../assets/icons/Link.svg'
+import LineDivider from './LineDivider'
+import LinkButton from './LinkButton'
 
-interface LinkButtonProps {
-    src: string
-    alt: string
-    text: string
+interface TweetFooterProps {
+    likes: number,
+    replies: string[]
 }
 
-function LinkButton(props: LinkButtonProps) {
-    return <button className="link m-2">
-        <img src={props.src} className="inline" alt={props.alt} /><span className='p-2'>{props.text}</span>
-    </button>
-}
+export default function TweetFooter(props: TweetFooterProps) {
+    const formatter = Intl.NumberFormat("en", { notation: "compact" });
+    const formattedLikes = formatter.format(props.likes);
 
-function LineDivider () {
-    return <div className="relative flex pt-2 items-center">
-        <div className="flex-grow border-t border-gray-400"></div>
-    </div>
-}
+    const numberOfReplies = props.replies.length.toString();
 
-export default function TweetFooter() {
     return <div className="buttonsContainer">
         <LineDivider />
-        <LinkButton src={Heart} alt={"Heart Icon"} text={"Like"} />
-        <LinkButton src={ChatBubble} alt={"ChatBubble Icon"} text={"Reply"} />
+        <LinkButton src={Heart} alt={"Heart Icon"} text={formattedLikes} />
+        <LinkButton src={ChatBubble} alt={"ChatBubble Icon"} text={numberOfReplies} />
         <LinkButton src={Link} alt={"Link Icon"} text={"Copy link to tweet"} />
     </div>
 }
