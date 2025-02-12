@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+.dot {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
