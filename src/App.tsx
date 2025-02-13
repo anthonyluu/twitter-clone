@@ -1,27 +1,51 @@
+import { useReducer } from 'react'
+
 import './App.css'
 import Feed from './Components/Feed.tsx'
-import Tweet from './Components/Tweet.tsx'
-
-interface Tweet {
-  id: number
-  displayName: string
-  userName: string
-  tweetBodyText: string
-  likes: number
-  replies: string[]
-  createdAt: string
-}
-
-export type { Tweet as TweetType }
+import { TweetsContext, TweetsDispatchContext } from './Components/TweetContext.tsx'
+import { TweetType } from './Types/TweetType.tsx'
 
 function App() {
+  const [tweets, tweetsDispatch] = useReducer(tweetsReducer, tweetData);
+
   return (
     <>
-      <Feed tweets={tweetData} />
+      <TweetsContext.Provider value={tweets}>
+        <TweetsDispatchContext.Provider value={tweetsDispatch}>
+          <Feed tweets={tweets} />
+        </TweetsDispatchContext.Provider>
+      </TweetsContext.Provider>
     </>
   )
 }
 
+interface TweetActionType {
+  type: string
+  tweet: TweetType
+}
+export type {TweetActionType}
+
+function tweetsReducer(tweets: TweetType[], action: TweetActionType) {
+  switch (action.type) {
+    case 'like': {
+      return tweets.map((tweet) => {
+        if (tweet.id === action.tweet.id) {
+          let newTweet = {...action.tweet};
+          console.log(newTweet)
+          newTweet.likes = newTweet.likes + 1
+          return newTweet;
+        }
+        else {
+          return tweet;
+        }
+      })
+    }
+    default:
+      throw Error("Unknown Tweet Action Type: " + action.type)
+  }
+}
+
+// Test Data
 const tweetData = [
   {
     id: 0,
